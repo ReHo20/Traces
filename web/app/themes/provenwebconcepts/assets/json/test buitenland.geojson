@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "test buitenland",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "fid": 17, "Naam": "Diele", "Locatie": "Duitsland", "kV": 0 }, "geometry": { "type": "Point", "coordinates": [ 7.311406318465295, 53.125998020723827 ] } },
+{ "type": "Feature", "properties": { "fid": 18, "Naam": "Station Gronau", "Locatie": "Duitsland", "kV": null }, "geometry": { "type": "Point", "coordinates": [ 7.034629008331604, 52.203106256133857 ] } },
+{ "type": "Feature", "properties": { "fid": 19, "Naam": "Van Eyck", "Locatie": "Belgie", "kV": null }, "geometry": { "type": "Point", "coordinates": [ 5.774048354947107, 51.120965109259259 ] } },
+{ "type": "Feature", "properties": { "fid": 20, "Naam": "Zandvliet", "Locatie": "Belgie", "kV": null }, "geometry": { "type": "Point", "coordinates": [ 4.24813504316399, 51.369588788327476 ] } },
+{ "type": "Feature", "properties": { "fid": 21, "Naam": "Borssele", "Locatie": "Borssele", "kV": 150 }, "geometry": { "type": "Point", "coordinates": [ 3.728489164315194, 51.43525832700427 ] } }
+]
+}

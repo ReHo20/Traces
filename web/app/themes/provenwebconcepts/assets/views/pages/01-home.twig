@@ -1,0 +1,9 @@
+{% extends 'base.twig' %}
+{% block content %}
+    <div id="mapid"></div>
+    {% if (is_front_page() and is_user_logged_in()) or is_singular('trace') %}
+        {% include 'partials/aside.twig' %}
+    {% else %}
+        <div class="overlay"></div>
+    {% endif %}
+{% endblock %}

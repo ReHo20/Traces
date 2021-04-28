@@ -1,0 +1,40 @@
+# Application
+web/app/mu-plugins/*/
+web/app/upgrade
+web/app/uploads/*
+web/app/languages/
+!web/app/uploads/.gitkeep
+web/app/themes/provenwebconcepts/logs/*
+web/app/cache/*
+web/app/w3tc-config/*
+!web/app/themes/provenwebconcepts/assets/json
+web/app/advanced-cache.php
+# WordPress
+web/wp
+web/.htaccess
+
+# Plugins
+web/app/plugins/*
+!web/app/plugins/acf-random-string-field
+
+# Dotenv
+.env
+.env.*
+!.env.example
+
+# Composer
+vendor/*
+!vendor/.gitkeep
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
+# Macbook
+.DS_Store
+
+# WebP Express
+web/app/themes/.htaccess
+web/app/webp-express

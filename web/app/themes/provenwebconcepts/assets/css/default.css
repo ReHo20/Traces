@@ -1,0 +1,68 @@
+body{
+    font-family: 'Open Sans', sans-serif;
+}
+
+body.admin-bar main{
+    height: calc(100vh - 32px);
+}
+
+main{
+    width:100vw;
+    height:100vh;
+    position:relative;
+}
+
+#mapid{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+aside{
+    background:#FFF;
+    position:absolute;
+    top:0;
+    right:0;
+    max-width:350px;
+    width:100%;
+    padding:20px;
+    box-shadow:0 0 15px 0 rgba(0, 0, 0, 25%);
+    z-index:400;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    max-height:100%;
+}
+
+.information{
+    max-height:60px;
+    overflow:hidden;
+    transition:all .3s ease-in-out;
+}
+
+.information.is-active{
+    max-height:100vh;
+}
+
+.information__title{
+    font-weight:600;
+    margin-bottom:10px;
+    display:block;
+}
+
+.information__value{
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+.overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:400;
+    backdrop-filter:blur(5px);
+    background:rgba(255,255,255,.75);
+}

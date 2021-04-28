@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {{ wp_head }}
+    {% include 'partials/analytics.twig' %}
+</head>
+<body class="{{ body_class }}">
+
+    {% block header %}
+        {% include 'partials/header.twig' %}
+    {% endblock %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block footer %}
+        {% include 'partials/footer.twig' %}
+    {% endblock %}
+
+    {% block cookie %}
+        {% if isEnv('production') and cookie_not_set('cookie-acceptance') %}
+            {% include 'partials/cookie.twig' %}
+        {% endif %}
+    {% endblock %}
+
+    {{ wp_footer }}
+
+</body>
+</html>

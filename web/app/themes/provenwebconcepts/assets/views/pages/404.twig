@@ -1,0 +1,6 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+    {% include 'partials/hero.twig' %}
+    {% include 'partials/blocks/text.twig' with {block: options.error.text} %}
+{% endblock %}
