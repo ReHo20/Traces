@@ -124,6 +124,7 @@
         }
         if(is_front_page() || is_singular('trace')) {
             wp_enqueue_script('leaflet-js', get_template_directory_uri() . '/assets/js/leaflet/leaflet.js', [], '1.0.0', true);
+            wp_enqueue_script('leaflet-providers', get_template_directory_uri() . '/assets/lib/leaflet-providers.js', [], '1.0.0', true);
             wp_enqueue_script('leaflet-config', get_template_directory_uri() . '/assets/js/leaflet-config.js', [], '1.0.0', true);
         }
 
