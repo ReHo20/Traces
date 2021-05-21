@@ -11,8 +11,10 @@ jQuery(document).ready(function ($) {
         minZoom: 8
     }).addTo(mymap);
 
+    var traces = {};
+
     $.each(latlngs, function(){
-        L.polyline(this.coordinates, {color: this.color, trace_id:this.id}).addTo(mymap).on('click', (e) => {
+        traces[this.id] = L.polyline(this.coordinates, {color: this.color, trace_id:this.id}).addTo(mymap).on('click', function(e){
 			$('[data-id="'+e.sourceTarget.options.trace_id+'"]').toggleClass('is-active');
         e.stopPropagation();
 		});
@@ -21,6 +23,11 @@ jQuery(document).ready(function ($) {
     mymap.on('click', function(e) {
         $('aside .information').removeClass('is-active');
         e.stopPropagation();
+    });
+
+    $('aside .information').on('click', function(){
+        mymap.flyToBounds(traces[$(this).attr('data-id')].getBounds());
+        $(this).addClass('is-active');
     });
 
     function copyright() {
