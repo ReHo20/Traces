@@ -13,9 +13,14 @@ jQuery(document).ready(function ($) {
 
     $.each(latlngs, function(){
         L.polyline(this.coordinates, {color: this.color, trace_id:this.id}).addTo(mymap).on('click', (e) => {
-			console.log(e);
 			$('[data-id="'+e.sourceTarget.options.trace_id+'"]').toggleClass('is-active');
+        e.stopPropagation();
 		});
+    });
+
+    mymap.on('click', function(e) {
+        $('aside .information').removeClass('is-active');
+        e.stopPropagation();
     });
 
     function copyright() {
