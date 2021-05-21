@@ -16,7 +16,9 @@
             <span class="information__title">Locatie</span>
             <p class="information__value">Eesveenseweg, Eesveen</p>
             {% if current_user_can('employee') %}
-                <button>Bewerken</button>
+                <div class="information__tools">
+                    <button>{{ source('assets/img/ico-edit.svg') }}</button>
+                </div>
             {% endif %}
     </div>
     {% endfor %}
