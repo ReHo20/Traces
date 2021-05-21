@@ -30,6 +30,9 @@
             'current_user_can',
             'get_traces',
             'is_singular',
+            'wp_logout_url',
+            'get_home_url',
+            'wp_get_current_user'
         ];
         foreach ($functions as $function) {
             $twig->addFunction(new Timber\Twig_Function($function, $function));
