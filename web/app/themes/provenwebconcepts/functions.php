@@ -246,7 +246,7 @@
         $traces = pwc_get_posts('trace', $args);
 
         foreach($traces as $key => $item){
-            $state = get_the_terms($item, 'state')[0];
+            $state = get_the_terms($item, 'state')[0] ?? [];
             if(!is_user_logged_in() && !get_field('visibility', 'term_' . $state->term_id)){
                 unset($traces[$key]);
             }
@@ -261,6 +261,9 @@
         $coordinates = [];
 
         foreach($traces as $key => $item){
+            if(empty($item->trace['url'])){
+                continue;
+            }
             $json = import($item->trace['url']);
             $coordinates[$key]['color'] = get_color($item);
             $coordinates[$key]['id'] = $item->ID;
