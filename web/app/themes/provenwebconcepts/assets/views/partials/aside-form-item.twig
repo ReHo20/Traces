@@ -1,24 +1,24 @@
-{% set item = get_traces(trace_id)[0] %}
-
-<form data-id="{{ trace_id }}" class="information is-active">
-    <label for="sap" class="information__title">SAP-naam</label>
-    <textarea id="sap" name="sap" class="information__title">{{ item.details.sap }}</textarea>
-    <label for="network" class="information__title">Tekeningnummer</label>
-    <input id="network" type="number" step="1" name="network" value="{{ item.details.network }}"/>
-    <label for="contractor" class="information__title">Aannemer</label>
-    <select name="contractor" id="contractor">
-        {% for contractor in get_contractors() %}
-            <option value="{{ contractor.id }}" {{ contractor.id is same as(item.details.contractor.ID) ? 'selected' }}>{{ contractor.post_title }}</option>
-        {% endfor %}
-    </select>
-    {#<p class="information__value">{{ item.details.contractor.post_title }}</p>#}
-    <label for="length" class="information__title">Lengte</label>
-    <input id="length" type="number" step="any" min="0" name="length" value="{{ item.details.length }}"/> km
-    <label class="information__title">Locatie</label>
-    <p class="information__value">Eesveenseweg, Eesveen</p>
-    <div class="information__tools">
-        <button class="js-cancel">{{ source('assets/img/ico-cancel.svg') }}</button>
-        <button class="js-save">{{ source('assets/img/ico-save.svg') }}</button>
-        <button class="js-revert">{{ source('assets/img/ico-revert.svg') }}</button>
+<form data-id="{{ trace_id }}" class="information is-active {{ item.details.contractor.post_name }}">
+    <div class="information__content">
+        <label for="sap" class="information__title">SAP-naam</label>
+        <textarea id="sap" name="sap" class="information__title">{{ item.details.sap }}</textarea>
+        <label for="network" class="information__title">Tekeningnummer</label>
+        <input id="network" type="number" step="1" name="network" value="{{ item.details.network }}"/>
+        <label for="contractor" class="information__title">Aannemer</label>
+        <select name="contractor" id="contractor">
+            {% for contractor in get_contractors() %}
+                <option value="{{ contractor.id }}" {{ contractor.id is same as(item.details.contractor.ID) ? 'selected' }}>{{ contractor.post_title }}</option>
+            {% endfor %}
+        </select>
+        {#<p class="information__value">{{ item.details.contractor.post_title }}</p>#}
+        <label for="length" class="information__title">Lengte</label>
+        <input id="length" type="number" step="any" min="0" name="length" value="{{ item.details.length }}"/> km
+        <label class="information__title">Locatie</label>
+        <p class="information__value">Eesveenseweg, Eesveen</p>
+        <div class="information__tools">
+            <button class="js-cancel">{{ source('assets/img/ico-cancel.svg') }}</button>
+            <button class="js-save">{{ source('assets/img/ico-save.svg') }}</button>
+            <button class="js-revert">{{ source('assets/img/ico-revert.svg') }}</button>
+        </div>
     </div>
 </form>

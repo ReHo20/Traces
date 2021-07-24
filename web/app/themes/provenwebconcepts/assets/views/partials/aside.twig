@@ -1,7 +1,14 @@
 
-<aside>
-    <h2>Tracé</h2>
-    {% for item in get_traces() %}
-        {% include 'partials/aside-item.twig' %}
-    {% endfor %}
+<aside class="traces-list">
+    <div class="traces-list__header">
+        <h2>Tracé</h2>
+    </div>
+    <div class="traces-list__content">
+        <pre>
+            {#{{ get_traces()|print_r }}#}
+        </pre>
+        {% for item in get_traces() %}
+            {% include 'partials/aside-item.twig' %}
+        {% endfor %}
+    </div>
 </aside>

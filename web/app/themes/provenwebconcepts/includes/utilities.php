@@ -316,7 +316,10 @@
 
         $fields = get_fields($post) ? : [];
 
-        foreach ($fields as $key => $field) {
+        foreach ($fields as $key => &$field) {
+            if(is_object($field)){
+                $field = get_custom_fields(Timber::get_post($field->ID));
+            }
             $post->$key = $field;
         }
 

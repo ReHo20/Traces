@@ -37,6 +37,7 @@
 
         $context = Timber::get_context();
         $context['trace_id'] = $formData['id'];
+        $context['item'] = get_traces($formData['id'])[0];
 
         return [
             'status' => 'success',
