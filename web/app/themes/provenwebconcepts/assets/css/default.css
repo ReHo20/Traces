@@ -1,4 +1,7 @@
-body{
+body,
+input,
+textarea,
+select{
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -20,33 +23,89 @@ main{
     top: 0px;
 }
 
-aside{
+.traces-list{
     background:#FFF;
     position:absolute;
     top:0;
     right:0;
     max-width:350px;
     width:100%;
-    padding:20px;
     box-shadow:0 0 15px 0 rgba(0, 0, 0, 25%);
     z-index:400;
+    max-height:100%;
+    display:flex;
+    flex-direction: column;
+}
+
+.traces-list input,
+.traces-list textarea,
+.traces-list select{
+    width: 100%;
+    font-size:14px;
+}
+
+.traces-list .traces-list__content{
     overflow-y:scroll;
     overflow-x:hidden;
-    max-height:100%;
+    padding:0 20px 10px;
+    flex:1;
+}
+
+.traces-list .traces-list__header h2{
+    font-size:26px;
+    padding:20px 20px 10px;
 }
 
 .information{
-    max-height:60px;
-    overflow:hidden;
     transition:all .3s ease-in-out;
     position:relative;
+}
+
+.information:not(.is-active){
+    cursor:pointer;
+}
+
+.information:not(.is-active):hover:before{
+    width:6px;
+}
+
+.information .information__content{
+    overflow:hidden;
+    transition:all .3s ease-in-out;
+    max-height:70px;
+    padding-top:10px;
+}
+
+.information:after{
+    content:"";
+    position:absolute;
+    left:-20px;
+    top:0;
+    bottom:0;
+    right:-20px;
+    z-index:-1;
+}
+
+.information:nth-child(even):after{
+    background: #f5f5f5;
+}
+
+.information:before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-20px;
+    bottom:0;
+    width:3px;
+    transition:all .3s ease-in-out;
+    background:#CDCDCD;
 }
 
 .information:not(:hover) .information__tools{
     transform:translateX(100%)translateX(60px);
 }
 
-.information.is-active{
+.information.is-active .information__content{
     max-height:100vh;
 }
 
@@ -63,7 +122,7 @@ aside{
 
 .information__tools{
     position:absolute;
-    right:0;
+    right:-20px;
     top:0;
     background:white;
     height:100%;
@@ -71,7 +130,8 @@ aside{
     align-items: center;
     flex-direction: row-reverse;
     transition:all .3s ease-in-out;
-    padding:0 10px;
+    padding:0 30px 0 10px;
+    max-height:70px;
 }
 
 .information__tools:before{
@@ -94,6 +154,10 @@ aside{
     background:darkblue;
     color:white;
     cursor:pointer;
+}
+
+.information__tools button:not(:first-of-type){
+    margin-right:5px;
 }
 
 .information__tools button svg *{
