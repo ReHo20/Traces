@@ -1,0 +1,19 @@
+<div class="information" data-id="{{ item.ID }}">
+    {% if is_user_logged_in() or rest %}
+        <span class="information__title">SAP-naam</span>
+        <p class="information__value">{{ item.details.sap }}</p>
+        <span class="information__title">Tekeningnummer</span>
+        <p class="information__value">{{ add_leading_zeros(item.details.network) }}</p>
+    {% endif %}
+    <span class="information__title">Aannemer</span>
+    <p class="information__value">{{ item.details.contractor.post_title }}</p>
+    <span class="information__title">Lengte</span>
+    <p class="information__value">{{ item.details.length ~ ' km' }}</p>
+    <span class="information__title">Locatie</span>
+    <p class="information__value">Eesveenseweg, Eesveen</p>
+    {#{% if current_user_can('employee') %}#}
+    <div class="information__tools">
+        <button class="js-edit">{{ source('assets/img/ico-edit.svg') }}</button>
+    </div>
+    {#{% endif %}#}
+</div>

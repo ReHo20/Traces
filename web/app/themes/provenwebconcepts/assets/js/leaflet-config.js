@@ -25,7 +25,7 @@ jQuery(document).ready(function ($) {
         e.stopPropagation();
     });
 
-    $('aside .information').on('click', function(){
+    $(document).on('click', 'aside .information', function(){
         mymap.flyToBounds(traces[$(this).attr('data-id')].getBounds());
         $(this).addClass('is-active');
     });

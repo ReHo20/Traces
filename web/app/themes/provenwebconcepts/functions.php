@@ -2,6 +2,7 @@
     require_once(__DIR__ . '/PWCLogger.php');
     require_once(__DIR__ . '/includes/pwc-acf-config.php');
     require_once(__DIR__ . '/includes/utilities.php');
+    require_once(__DIR__ . '/includes/rest.php');
     add_action('wp_enqueue_scripts', 'scripts');
     add_action('wp_enqueue_scripts', 'styles');
     add_action('admin_head', 'styles_and_scripts_in_wpadmin');
@@ -32,7 +33,9 @@
             'is_singular',
             'wp_logout_url',
             'get_home_url',
-            'wp_get_current_user'
+            'wp_get_current_user',
+            'field',
+            'get_contractors'
         ];
         foreach ($functions as $function) {
             $twig->addFunction(new Timber\Twig_Function($function, $function));
@@ -129,6 +132,7 @@
             wp_enqueue_script('leaflet-js', get_template_directory_uri() . '/assets/js/leaflet/leaflet.js', [], '1.0.0', true);
             wp_enqueue_script('leaflet-providers', get_template_directory_uri() . '/assets/lib/leaflet-providers.js', [], '1.0.0', true);
             wp_enqueue_script('leaflet-config', get_template_directory_uri() . '/assets/js/leaflet-config.js', [], '1.0.0', true);
+            wp_enqueue_script('trace-management-front', get_template_directory_uri() . '/assets/js/trace-management-front.js', [], '1.0.0', true);
         }
 
         wp_localize_script('leaflet-js', 'latlngs',
@@ -229,14 +233,18 @@
         return str_pad($string, $length, '0', STR_PAD_LEFT);
     }
 
-    function get_traces(){
+    function get_traces($id = ''){
 
         $args = [
             'orderby' => 'post_title',
             'order' => 'ASC'
         ];
 
-        if(!is_front_page()){
+        if ($id) {
+            $args += [
+                'p' => $id
+            ];
+        } elseif (!is_front_page()) {
             global $post;
             $args += [
                 'post__in' => [$post->ID]
@@ -247,7 +255,7 @@
 
         foreach($traces as $key => $item){
             $state = get_the_terms($item, 'state')[0] ?? [];
-            if(!is_user_logged_in() && !get_field('visibility', 'term_' . $state->term_id)){
+            if(!(is_user_logged_in() || REST_REQUEST) && !get_field('visibility', 'term_' . $state->term_id)){
                 unset($traces[$key]);
             }
         }
@@ -293,4 +301,15 @@
     }
 
         add_role( 'employee', 'Werknemer', array( 'read' => true ) );
+
+    function get_contractors(){
+        $args = [
+            'orderby' => 'post_title',
+            'order' => 'ASC'
+        ];
+
+        $contractors = pwc_get_posts('contractor', $args);
+
+        return $contractors->get_posts();
+    }
 
