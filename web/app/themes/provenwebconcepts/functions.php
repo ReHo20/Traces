@@ -254,12 +254,18 @@
 
         $traces = pwc_get_posts('trace', $args);
 
-        foreach($traces as $key => $item){
-            $item->state = get_states($item)[0] ?? [];
-            if(!(is_user_logged_in() || REST_REQUEST) && !get_field('visibility', 'term_' . $item->state->term_id)){
-                unset($traces[$key]);
+//        if($traces) {
+            foreach ($traces as $key => $item) {
+                $item->state = get_states($item)[0] ?? [];
+                if(empty($item->state)){
+                    continue;
+                }
+                if (!(is_user_logged_in() || defined('REST_REQUEST')) &&
+                    !get_field('visibility', 'term_' . $item->state->term_id)) {
+                    unset($traces[$key]);
+                }
             }
-        }
+//        }
 
         return $traces->get_posts();
     }
@@ -295,7 +301,7 @@
     function get_color($project){
         if(!is_user_logged_in()){
             $state = get_the_terms($project, 'state')[0];
-            return get_field('color', 'term_' . $state->term_id);
+            return !empty($state) ? get_field('color', 'term_' . $state->term_id) : '';
         }else{
             return get_field('color', $project->details['contractor']);
         }
