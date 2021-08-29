@@ -1,4 +1,7 @@
 <?php
+
+    use Timber\Timber;
+
     $context = Timber::get_context();
     $context['post'] = Timber::get_post();
     $context['post']->fields = get_fields($context['post']->ID);

@@ -42,7 +42,7 @@
         ]);
     }
 
-    function my_acf_json_save_point($path) {
+    function my_acf_json_save_point($path): string {
         $path = get_stylesheet_directory() . '/assets/json';
 
         return $path;

@@ -1,4 +1,7 @@
 <?php
+
+    use Timber\Timber;
+
     $context = Timber::get_context();
     $context['post'] = [
         'title' => '404 foutmelding',

@@ -105,8 +105,9 @@
         if (showCf7() && function_exists('wpcf7_enqueue_styles')) {
             wpcf7_enqueue_styles();
         }
-        if(is_front_page() || is_singular('trace')){
-        wp_enqueue_style('leaflet-css', get_template_directory_uri() . '/assets/js/leaflet/leaflet.css', [], '1.0.0');
+        if (is_front_page() || is_singular('trace')) {
+            wp_enqueue_style('leaflet-css', get_template_directory_uri() .
+                '/assets/js/leaflet/leaflet.css', [], '1.0.0');
         }
     }
 
@@ -116,10 +117,10 @@
             wp_enqueue_script('jquery', 'https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js', [], '3.3.1', true);
         }
         //wp_enqueue_script('jquery.slicknav', get_template_directory_uri() .
-           // '/assets/lib/slicknav/jquery.slicknav.min.js', [], '1.0.10', true);
+        // '/assets/lib/slicknav/jquery.slicknav.min.js', [], '1.0.10', true);
         //wp_enqueue_script('wow.min', get_template_directory_uri() . '/assets/lib/wow/wow.min.js', [], '3.5.2', true);
         //wp_enqueue_script('menu-config', get_template_directory_uri() .
-          //  '/assets/js/menu-config.min.js', [], '1.0.0', true);
+        //  '/assets/js/menu-config.min.js', [], '1.0.0', true);
         //wp_enqueue_script('lazy', get_template_directory_uri() . '/assets/js/lazy.min.js', [], '1.0.0', true);
 
         if (showCf7() && function_exists('wpcf7_enqueue_scripts')) {
@@ -129,16 +130,18 @@
             wp_enqueue_script('cookie-js', get_template_directory_uri() .
                 '/assets/js/cookie.min.js', [], '1.0.0', true);
         }
-        if(is_front_page() || is_singular('trace')) {
-            wp_enqueue_script('leaflet-js', get_template_directory_uri() . '/assets/js/leaflet/leaflet.js', [], '1.0.0', true);
-            wp_enqueue_script('leaflet-providers', get_template_directory_uri() . '/assets/lib/leaflet-providers.js', [], '1.0.0', true);
-            wp_enqueue_script('leaflet-config', get_template_directory_uri() . '/assets/js/leaflet-config.js', [], '1.0.1', true);
-            wp_enqueue_script('trace-management-front', get_template_directory_uri() . '/assets/js/trace-management-front.js', [], '1.0.0', true);
+        if (is_front_page() || is_singular('trace')) {
+            wp_enqueue_script('leaflet-js', get_template_directory_uri() .
+                '/assets/js/leaflet/leaflet.js', [], '1.0.0', true);
+            wp_enqueue_script('leaflet-providers', get_template_directory_uri() .
+                '/assets/lib/leaflet-providers.js', [], '1.0.0', true);
+            wp_enqueue_script('leaflet-config', get_template_directory_uri() .
+                '/assets/js/leaflet-config.js', [], '1.0.1', true);
+            wp_enqueue_script('trace-management-front', get_template_directory_uri() .
+                '/assets/js/trace-management-front.js', [], '1.0.0', true);
         }
 
-        wp_localize_script('leaflet-js', 'latlngs',
-        get_coordinates()
-    );
+        wp_localize_script('leaflet-js', 'latlngs', get_coordinates());
 
     }
 
@@ -202,12 +205,13 @@
         return $out;
     }
 
-    function import($url){
+    function import($url) {
         $json = file_get_contents($url);
+
         return json_decode($json, true);
     }
 
-    function geojson_import(){
+    function geojson_import() {
         $geojson = '{
             "type": "FeatureCollection",
             "name": "110KV-kabels",
@@ -222,19 +226,21 @@
         return json_decode($geojson, true)['features'][0]['geometry']['coordinates'];
     }
 
-    function cc_mime_types( $mimes ){
-        $mimes['json'] = 'application/json'; 
-        $mimes['geojson'] = 'application/geo+json'; 
+    function cc_mime_types($mimes) {
+        $mimes['json'] = 'application/json';
+        $mimes['geojson'] = 'application/geo+json';
+
         return $mimes;
-      }
-      add_filter( 'upload_mimes', 'cc_mime_types' );
+    }
+
+    add_filter('upload_mimes', 'cc_mime_types');
 
 
-    function add_leading_zeros($string, $length = 12){
+    function add_leading_zeros($string, $length = 12): string {
         return str_pad($string, $length, '0', STR_PAD_LEFT);
     }
 
-    function get_traces($id = ''){
+    function get_traces($id = '') {
 
         $args = [
             'orderby' => 'post_title',
@@ -254,41 +260,42 @@
 
         $traces = pwc_get_posts('trace', $args);
 
-//        if($traces) {
-            foreach ($traces as $key => $item) {
-                $item->state = get_states($item)[0] ?? [];
-                if(empty($item->state)){
-                    continue;
-                }
-                if (!(is_user_logged_in() || defined('REST_REQUEST')) &&
-                    !get_field('visibility', 'term_' . $item->state->term_id)) {
-                    unset($traces[$key]);
-                }
+        //        if($traces) {
+        foreach ($traces as $key => $item) {
+            $item->state = get_states($item)[0] ?? [];
+            if (empty($item->state)) {
+                continue;
             }
-//        }
+            if (!(is_user_logged_in() || defined('REST_REQUEST')) &&
+                !get_field('visibility', 'term_' . $item->state->term_id)) {
+                unset($traces[$key]);
+            }
+        }
+
+        //        }
 
         return $traces->get_posts();
     }
 
-    function get_coordinates(){
+    function get_coordinates(): array {
         $traces = get_traces();
 
         $coordinates = [];
 
-        foreach($traces as $key => $item){
-            if(empty($item->trace['url'])){
+        foreach ($traces as $key => $item) {
+            if (empty($item->trace['url'])) {
                 continue;
             }
             $json = import($item->trace['url']);
             $coordinates[$key]['color'] = get_color($item);
             $coordinates[$key]['id'] = $item->ID;
-            foreach($json['features'] as $sec => $feature){
+            foreach ($json['features'] as $sec => $feature) {
 
                 $coordinates[$key]['coordinates'][$sec] = $feature['geometry']['coordinates'];
 
-                foreach($coordinates[$key]['coordinates'][$sec] as &$points){
+                foreach ($coordinates[$key]['coordinates'][$sec] as &$points) {
                     $points = array_reverse($points);
-                    foreach($points as &$abc){
+                    foreach ($points as &$abc) {
                         $abc = is_array($abc) ? array_reverse($abc) : $abc;
                     }
                 }
@@ -298,18 +305,19 @@
         return $coordinates;
     }
 
-    function get_color($project){
-        if(!is_user_logged_in()){
+    function get_color($project) {
+        if (!is_user_logged_in()) {
             $state = get_the_terms($project, 'state')[0];
+
             return !empty($state) ? get_field('color', 'term_' . $state->term_id) : '';
-        }else{
+        } else {
             return get_field('color', $project->details['contractor']);
         }
     }
 
-        add_role( 'employee', 'Werknemer', array( 'read' => true ) );
+    add_role('employee', 'Werknemer', array('read' => true));
 
-    function get_contractors(){
+    function get_contractors(): array {
         $args = [
             'orderby' => 'post_title',
             'order' => 'ASC'
@@ -320,13 +328,13 @@
         return $contractors->get_posts();
     }
 
-    function get_extra_traces_styling(){
+    function get_extra_traces_styling(): string {
         $states = get_states();
         $contractors = get_contractors();
 
         $css = '';
 
-        if($states) {
+        if ($states) {
             foreach ($states as $state) {
                 $css .= '
                 .' . $state->slug . ':before{
@@ -337,7 +345,7 @@
             }
         }
 
-        if($contractors) {
+        if ($contractors) {
             foreach ($contractors as $state) {
                 $css .= '
                 .' . $state->post_name . ':before{

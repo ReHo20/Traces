@@ -4,7 +4,7 @@
      * Determine if the current visitor is PWC, for development purposes
      * @return bool
      */
-    function isPWC() {
+    function isPWC(): bool {
         return (in_array($_SERVER['REMOTE_ADDR'], [
             '80.127.149.186' // PWC Kantoor
         ]));
@@ -25,13 +25,13 @@
     /**
      * Determine if a certain block has been added to a page to load in required styles/scripts for that block
      *
-     * @param        $layout. The block you want to check for
+     * @param        $layout . The block you want to check for
      * @param string $flexible_content Optional
      * @param null   $type Optional
      *
      * @return bool
      */
-    function page_has_block($layout, $flexible_content = 'blocks', $type = null) {
+    function page_has_block($layout, string $flexible_content = 'blocks', $type = null): bool {
         global $post;
         if (isset($post->ID) && function_exists('get_fields') && !empty(get_fields($post->ID)[$flexible_content])) {
             foreach (get_fields($post->ID)[$flexible_content] as $block) {
@@ -46,13 +46,20 @@
                 }
             }
         }
+
+        return false;
     }
 
     /**
      * Return the internationalized version of a dutch phone number
+     *
+     * @param      $number
+     * @param int  $countrycode
+     * @param bool $addPlus
+     *
      * @return string
      */
-    function convertPhone($number, $countrycode = 31, bool $addPlus = true) {
+    function convertPhone($number, $countrycode = 31, bool $addPlus = true): string {
         $replace = ['(0)', '-', ' '];
         $number = str_replace($replace, '', $number);
         if ($number[0] == '0') {
@@ -71,17 +78,23 @@
 
     /**
      * Determine if a certain cookie has not yet been set
+     *
+     * @param $cookie
+     *
      * @return bool
      */
-    function cookie_not_set($cookie) {
+    function cookie_not_set($cookie): bool {
         return isset($_COOKIE[$cookie]) ? false : true;
     }
 
     /**
      * Determine if the environment is matched
+     *
+     * @param $selectedEnvironment
+     *
      * @return bool
      */
-    function isEnv($selectedEnvironment) {
+    function isEnv($selectedEnvironment): bool {
         return $selectedEnvironment === WP_ENV;
     }
 
@@ -89,7 +102,7 @@
      * Determine on which pages CF7 scripts/styles need to be shown
      * @return bool
      */
-    function showCf7() {
+    function showCf7(): bool {
         return is_page('contact') || page_has_block('blocks', 'contact');
     }
 
@@ -98,7 +111,7 @@
      *
      * @param $url
      *
-     * @return mixed|null
+     * @return array|bool|string|string[]|null
      */
     function url_get_contents($url) {
         if (!function_exists('curl_init')) {
@@ -121,7 +134,7 @@
      *
      * @return array
      */
-    function get_source($block, $layout) {
+    function get_source($block, $layout): array {
         if (!isset($block['source'])) {
             return $block;
         }
@@ -142,7 +155,7 @@
      *
      * @return array
      */
-    function pwc_get_breadcrumbs() {
+    function pwc_get_breadcrumbs(): array {
 
         global $post;
 
@@ -208,7 +221,7 @@
                     $breadcrumbs[] = [
                         'id' => $bpost['id'],
                         'title' => $bpost['post_title'],
-                        'link' => isset($bpost['link']) ? $bpost['link'] : get_permalink($bpost['id'])
+                        'link' => $bpost['link'] ?? get_permalink($bpost['id'])
                     ];
                 }
             }
@@ -236,7 +249,7 @@
      *
      * @return string
      */
-    function pwc_get_form($form) {
+    function pwc_get_form($form): string {
         if (empty($form)) {
             return '';
         }
@@ -258,7 +271,7 @@
      *
      * @return bool
      */
-    function is_block($block) {
+    function is_block(array $block): bool {
         return isset($block['acf_fc_layout']) || isset($block['groupID']);
     }
 
@@ -269,15 +282,15 @@
      * @param array $args
      * @param int   $posts_per_page
      *
-     * @return \Timber\PostQuery
+     * @return Timber\PostQuery
      */
-    function pwc_get_posts($post_type, $args = [], $posts_per_page = - 1) {
+    function pwc_get_posts($post_type, array $args = [], int $posts_per_page = - 1) {
 
         $lastArgs = [
             'post_type' => $post_type
         ];
 
-        if(!isset($args['posts_per_page'])){
+        if (!isset($args['posts_per_page'])) {
             $lastArgs += [
                 'posts_per_page' => $posts_per_page
             ];
@@ -317,7 +330,7 @@
         $fields = get_fields($post) ? : [];
 
         foreach ($fields as $key => &$field) {
-            if(is_object($field)){
+            if (is_object($field)) {
                 $field = get_custom_fields(Timber::get_post($field->ID));
             }
             $post->$key = $field;
