@@ -307,7 +307,8 @@
 
     function get_color($project) {
         if (!is_user_logged_in()) {
-            $state = get_the_terms($project, 'state')[0];
+
+            $state = !empty(get_the_terms($project, 'state')) ? get_the_terms($project, 'state')[0] : [];
 
             return !empty($state) ? get_field('color', 'term_' . $state->term_id) : '';
         } else {
