@@ -1,14 +1,21 @@
 <aside class="traces-list">
-    <div class="traces-list__header">
-        <h2>Tracé</h2>
-        <button class="js-filter c-btn--icon">{{ source('assets/img/ico-filter.svg') }}</button>
+    <div class="traces-list__traces">
+        <div class="traces-list__header">
+            <h2>Tracé</h2>
+            <button class="js-filter c-btn--icon">{{ source('assets/img/ico-filter.svg') }}</button>
+        </div>
+        <div class="traces-list__content">
+            {% for item in get_traces() %}
+                {% include 'partials/aside-item.twig' %}
+            {% endfor %}
+        </div>
     </div>
-    <div class="traces-list__content">
-        <pre>
-            {# {{ get_traces()|print_r }} #}
-        </pre>
-        {% for item in get_traces() %}
-            {% include 'partials/aside-item.twig' %}
-        {% endfor %}
+    <div class="traces-list__filters">
+        <div class="traces-list__header">
+            <h2>Filters</h2>
+        </div>
+        <div class="traces-list__content">
+            Hier komen de filters
+        </div>
     </div>
 </aside>
