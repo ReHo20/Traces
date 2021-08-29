@@ -114,7 +114,7 @@
      * @return array|bool|string|string[]|null
      */
     function url_get_contents($url) {
-        if (!function_exists('curl_init')) {
+        if (!function_exists('curl_init') || file_exists($url)) {
             return null;
         }
         $ch = curl_init();
