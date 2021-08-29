@@ -35,7 +35,10 @@
             'get_home_url',
             'wp_get_current_user',
             'field',
-            'get_contractors'
+            'get_contractors',
+            'wp_login_url',
+            'get_login_redirect_url',
+            'wp_lostpassword_url',
         ];
         foreach ($functions as $function) {
             $twig->addFunction(new Timber\Twig_Function($function, $function));
@@ -373,4 +376,8 @@
         }
 
         return $states;
+    }
+
+    function get_login_redirect_url(): string {
+        return !empty($_REQUEST['redirect_to']) ? $_REQUEST['redirect_to'] : admin_url();
     }

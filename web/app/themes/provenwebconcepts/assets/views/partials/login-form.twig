@@ -1,0 +1,26 @@
+<div class="login-form">
+    <h1>Inloggen</h1>
+    <form name="loginform" id="loginform" class="flex-form" action="{{ wp_login_url() }}" method="post">
+        <div class="flex-form__row">
+            <label for="user_login">Gebruikersnaam of e-mailadres</label>
+            <input type="text" name="log" id="user_login" class="input" value="" size="20" autocapitalize="off">
+        </div>
+        <div class="flex-form__row">
+            <label for="user_pass">Wachtwoord</label>
+            <div class="pwd">
+                <input type="password" name="pwd" id="user_pass" class="input password-input" value="" size="20">
+            </div>
+        </div>
+        <div class="flex-form__row">
+            <input name="rememberme" type="checkbox" id="rememberme" value="forever"> <label
+                    for="rememberme">Onthoud mij</label>
+        </div>
+        <div class="flex-form__submit">
+            <input type="submit" name="wp-submit" id="wp-submit" class="c-btn c-btn--primary"
+                   value="Inloggen">
+            <input type="hidden" name="redirect_to" value="{{ get_login_redirect_url() }}">
+            <input type="hidden" name="testcookie" value="1">
+        </div>
+        <a href="{{ wp_lostpassword_url() }}">Wachtwoord vergeten?</a>
+    </form>
+</div>

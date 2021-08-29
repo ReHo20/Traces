@@ -220,6 +220,38 @@ main {
     color: red;
 }
 
+.c-btn {
+    font-size: 1rem;
+    line-height: 1;
+    font-weight: 700;
+
+    display: inline-table;
+
+    padding: 6px 20px;
+
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    border: 3px solid;
+    border-radius: 20px;
+    outline: none;
+
+    appearance: none;
+}
+
+.c-btn--primary {
+    border-color: darkblue;
+    color: darkblue;
+}
+
+.c-btn--primary:hover {
+    background-color: darkblue;
+    color: #FFF;
+}
+
 .c-btn--icon {
     line-height: 0;
     padding: 7.5px;
@@ -241,4 +273,139 @@ main {
 .c-btn--icon svg {
     width: 10px;
     height: 10px;
+}
+
+.login-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #FFF;
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 25%);
+    padding: 20px;
+    z-index: 401;
+    width: calc(100% - 40px);
+    max-width: 500px;
+}
+
+.login-form .pwd input {
+    width: 100%;
+}
+
+.login-form .flex-form {
+    margin-top: 20px;
+}
+
+.login-form h1 {
+    font-size: 26px;
+}
+
+.login-form a {
+    color: darkblue;
+    text-decoration: none;
+}
+
+.login-form a:hover {
+    text-decoration: underline;
+}
+
+.flex-form {
+    display: flex;
+
+    width: 100%;
+
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.flex-form__row,
+.flex-form__column {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-form__row label,
+.flex-form__column label {
+    /*width: 100%;*/
+}
+
+.flex-form__column *:last-child {
+    margin-bottom: 0;
+}
+
+.flex-form__submit {
+    display: flex;
+
+    width: 100%;
+    margin-bottom: 0;
+
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.flex-form label {
+    margin-bottom: 10px;
+    user-select: none;
+}
+
+
+.flex-form label + * {
+    width: 100%;
+}
+
+.flex-form input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]),
+.flex-form textarea {
+    padding: 10px 7px;
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+.flex-form input:focus {
+    border-color: darkblue !important;
+}
+
+.flex-form input[type=checkbox] + label {
+    position: relative;
+    z-index: 1;
+    padding-left: 15px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.flex-form input[type=checkbox] + label:before {
+    content: "";
+    background: #FFF;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    right: 100%;
+    top: 0;
+    z-index: -1;
+    border: 1px solid;
+    border-radius: 5px;
+    transform: translateX(4px);
+    transition: all .3s ease-in-out;
+}
+
+.flex-form input[type=checkbox]:checked + label:before {
+    background: darkblue;
+}
+
+.flex-form__submit input,
+.flex-form__submit button {
+    position: relative;
+    z-index: 1;
+}
+
+@media screen and (min-width: 551px) {
+    .flex-form__row {
+        margin-bottom: 35px;
+    }
+
+    .flex-form__column {
+        width: calc(100% / 2 - 10px);
+        margin-bottom: 35px;
+    }
 }
