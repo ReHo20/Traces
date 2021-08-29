@@ -10,15 +10,15 @@
                 <option value="{{ contractor.id }}" {{ contractor.id is same as(item.details.contractor.ID) ? 'selected' }}>{{ contractor.post_title }}</option>
             {% endfor %}
         </select>
-        {#<p class="information__value">{{ item.details.contractor.post_title }}</p>#}
+        {# <p class="information__value">{{ item.details.contractor.post_title }}</p> #}
         <label for="length" class="information__title">Lengte</label>
         <input id="length" type="number" step="any" min="0" name="length" value="{{ item.details.length }}"/> km
         <label class="information__title">Locatie</label>
         <p class="information__value">Eesveenseweg, Eesveen</p>
         <div class="information__tools">
-            <button class="js-cancel">{{ source('assets/img/ico-cancel.svg') }}</button>
-            <button class="js-save">{{ source('assets/img/ico-save.svg') }}</button>
-            <button class="js-revert">{{ source('assets/img/ico-revert.svg') }}</button>
+            <button class="js-cancel c-btn--icon">{{ source('assets/img/ico-cancel.svg') }}</button>
+            <button class="js-save c-btn--icon">{{ source('assets/img/ico-save.svg') }}</button>
+            <button class="js-revert c-btn--icon">{{ source('assets/img/ico-revert.svg') }}</button>
         </div>
     </div>
 </form>

@@ -12,10 +12,10 @@
         <p class="information__value">{{ item.details.length ~ ' km' }}</p>
         <span class="information__title">Locatie</span>
         <p class="information__value">Eesveenseweg, Eesveen</p>
-        {#{% if current_user_can('employee') %}#}
+        {# {% if current_user_can('employee') %} #}
         <div class="information__tools">
-            <button class="js-edit">{{ source('assets/img/ico-edit.svg') }}</button>
+            <button class="js-edit c-btn--icon">{{ source('assets/img/ico-edit.svg') }}</button>
         </div>
-        {#{% endif %}#}
+        {# {% endif %} #}
     </div>
 </div>

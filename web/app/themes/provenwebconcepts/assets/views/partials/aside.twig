@@ -1,11 +1,11 @@
-
 <aside class="traces-list">
     <div class="traces-list__header">
         <h2>Tracé</h2>
+        <button class="js-filter c-btn--icon">{{ source('assets/img/ico-filter.svg') }}</button>
     </div>
     <div class="traces-list__content">
         <pre>
-            {#{{ get_traces()|print_r }}#}
+            {# {{ get_traces()|print_r }} #}
         </pre>
         {% for item in get_traces() %}
             {% include 'partials/aside-item.twig' %}
