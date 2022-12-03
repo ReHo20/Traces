@@ -51,6 +51,7 @@
     add_theme_support('post-thumbnails');
     add_theme_support('title-tag');
     add_filter('shortcode_atts_wpcf7', 'custom_shortcode_atts_wpcf7_filter', 10, 3);
+    add_filter('post_mime_types', 'custom_mime_types');
 
     if (isPWC() && is_user_logged_in()) {
         show_admin_bar(true);
@@ -381,3 +382,21 @@
     function get_login_redirect_url(): string {
         return !empty($_REQUEST['redirect_to']) ? $_REQUEST['redirect_to'] : admin_url();
     }
+
+    function custom_mime_types($post_mime_types){
+        $post_mime_types['application/octet-stream'] = [
+            'GeoJSON',
+            'GeoJSON beheren',
+            [
+                'GeoJSON (%s)',
+                'GeoJSON (%s)',
+                'singular' => 'GeoJSON (%s)',
+                'plural' => 'GeoJSON (%s)',
+                'context' => '',
+                'domain' => '',
+            ]
+        ];
+
+        return $post_mime_types;
+    }
+
