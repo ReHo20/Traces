@@ -320,7 +320,37 @@
         }
     }
 
-    add_role('employee', 'Werknemer', array('read' => true));
+    $traceCapabilities = [
+        'edit_trace' => true,
+        'read_trace' => true,
+        'delete_trace' => true,
+        'edit_traces' => true,
+        'edit_others_traces' => true,
+        'delete_traces' => true,
+        'publish_traces' => true,
+        'read_private_traces' => true,
+        'delete_private_traces' => true,
+        'delete_published_traces' => true,
+        'delete_others_traces' => true,
+        'edit_private_traces' => true,
+        'edit_published_traces' => true,
+    ];
+
+    add_role('employee', 'Werknemer', ['read' => true]);
+    add_role('project-manager', 'Projectleider', ['read' => true, 'list_users' => true, 'create_users' => true, 'create_posts' => false]);
+
+    remove_role('subscriber');
+    remove_role('contributor');
+    remove_role('editor');
+    remove_role('author');
+
+    $administrator = get_role('administrator');
+    $projectManager = get_role('project-manager');
+
+    foreach($traceCapabilities as $capability => $grand){
+        $administrator->add_cap($capability);
+        $projectManager->add_cap($capability);
+    }
 
     function get_contractors(): array {
         $args = [
