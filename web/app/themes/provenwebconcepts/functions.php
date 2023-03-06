@@ -39,6 +39,7 @@
             'wp_login_url',
             'get_login_redirect_url',
             'wp_lostpassword_url',
+            'get_filters',
         ];
         foreach ($functions as $function) {
             $twig->addFunction(new Timber\Twig_Function($function, $function));
@@ -105,6 +106,7 @@
         wp_enqueue_style('fonts', 'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap', '', '');
         wp_add_inline_style('fonts', url_get_contents(get_template_directory_uri() . '/assets/css/critical.css'));
         wp_enqueue_style('default', get_template_directory_uri() . '/assets/css/default.css', [], '1.0.2');
+        wp_enqueue_style('select2', get_template_directory_uri() . '/assets/lib/select2/select2.min.css', [], '4.0.5');
         wp_add_inline_style('default', get_extra_traces_styling());
         if (showCf7() && function_exists('wpcf7_enqueue_styles')) {
             wpcf7_enqueue_styles();
@@ -143,6 +145,12 @@
                 '/assets/js/leaflet-config.js', [], '1.0.1', true);
             wp_enqueue_script('trace-management-front', get_template_directory_uri() .
                 '/assets/js/trace-management-front.js', [], '1.0.0', true);
+            wp_enqueue_script('select2', get_template_directory_uri() .
+                '/assets/lib/select2/select2.full.min.js', [], '4.0.5', true);
+            wp_enqueue_script('select2-config', get_template_directory_uri() .
+                '/assets/js/select2-config.js', ['select2'], '1.0.0', true);
+            wp_enqueue_script('filters', get_template_directory_uri() .
+                '/assets/js/filters.js', [], '1.0.0', true);
         }
 
         wp_localize_script('leaflet-js', 'latlngs', get_coordinates());
@@ -428,5 +436,38 @@
         ];
 
         return $post_mime_types;
+    }
+
+    function get_filters(): array {
+
+        $taxonomies = get_object_taxonomies('trace');
+        $filters = [];
+
+        array_map(function($id) use(&$filters) {
+            $taxonomy = get_taxonomy($id);
+            $terms = get_terms( $taxonomy->name, [
+                'hide_empty' => true,
+            ]);
+            $items = [];
+
+            array_walk($terms, function($val, $key) use(&$items){
+                $items[$val->slug] = $val->name;
+            });
+
+            $filters[] = [
+                'title' => $taxonomy->labels->singular_name,
+                'name' => $taxonomy->name,
+                'items' => $items
+            ];
+        }, $taxonomies);
+
+        /**
+         * title
+         * name
+         * items
+         */
+
+
+        return $filters;
     }
 

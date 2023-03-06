@@ -5,9 +5,7 @@
             <button class="js-filter c-btn--icon">{{ source('assets/img/ico-filter.svg') }}</button>
         </div>
         <div class="traces-list__content">
-            {% for item in get_traces() %}
-                {% include 'partials/aside-item.twig' %}
-            {% endfor %}
+            {% include 'partials/traces.twig' with{items: get_traces()} %}
         </div>
     </div>
     <div class="traces-list__filters">
@@ -15,7 +13,23 @@
             <h2>Filters</h2>
         </div>
         <div class="traces-list__content">
-            Hier komen de filters
+            <form class="flex-form">
+                <div class="flex-form__row">
+                    <label for="s">Zoeken</label>
+                    <input type="search" id="s" name="s" placeholder="Zoek op SAP-naam of tekeningnummer">
+                </div>
+                {% for filter in get_filters() %}
+                    <div class="flex-form__row">
+                        <label for="{{ filter.name }}">{{ filter.title }}</label>
+                        <select name="{{ filter.name }}" id="{{ filter.name }}" class="js-select">
+                            <option value="">Selecteer een {{ filter.title|lower }}</option>
+                            {% for value,name in filter.items %}
+                                <option value="{{ value }}">{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                {% endfor %}
+            </form>
         </div>
     </div>
 </aside>

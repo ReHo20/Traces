@@ -1,0 +1,7 @@
+{% for item in items %}
+    {% include 'partials/aside-item.twig' %}
+{% else %}
+    <div>
+        Geen traces gevonden
+    </div>
+{% endfor %}
