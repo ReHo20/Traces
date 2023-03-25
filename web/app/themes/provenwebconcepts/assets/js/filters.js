@@ -51,10 +51,6 @@ jQuery(document).ready(function ($) {
 	$('.js-link').on('click', function(){
 		const $this = $(this);
 
-		console.info('Copy', $this.data('link'), window.isSecureContext);
-		console.warn('Copy', $this.data('link'), window.isSecureContext);
-		console.error('Copy', $this.data('link'), window.isSecureContext);
-
 		navigator.clipboard.writeText($this.data('link'));
 
 		$this.html(checkIcon);

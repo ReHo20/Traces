@@ -15,6 +15,7 @@
         {# {% if current_user_can('employee') %} #}
         <div class="information__tools">
             <button class="js-edit c-btn--icon">{{ source('assets/img/ico-edit.svg') }}</button>
+            <button class="js-link c-btn--icon" title="Kopieër link van deze tracé" data-link="{{ item.link }}">{{ source('assets/img/ico-link.svg') }}</button>
         </div>
         {# {% endif %} #}
     </div>
