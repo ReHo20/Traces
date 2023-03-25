@@ -73,7 +73,8 @@
     "advanced-custom-fields/advanced-custom-fields-pro": "6.0.*",
     "bjornjohansen/wplang" : "0.2.*",
     "jmikola/geojson": "1.1.*",
-    "pollen-solutions/wp-salt" : "1.0.3"
+    "pollen-solutions/wp-salt" : "1.0.3",
+    "wpackagist-plugin/acf-better-search": "^4.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "3.6.*",
