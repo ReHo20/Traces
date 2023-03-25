@@ -6,31 +6,38 @@
         //region Add to cart
         register_rest_route('traces', '/edit/', [
             'methods' => 'post',
-            'args' => array(),
+            'args' => [],
             'callback' => function(WP_REST_Request $request) {
                 return retrieve_edit_fields($request);
-            }
+            },
         ]);
         register_rest_route('traces', '/save/', [
             'methods' => 'post',
-            'args' => array(),
+            'args' => [],
             'callback' => function(WP_REST_Request $request) {
                 return save_frontend_fields($request);
-            }
+            },
         ]);
         register_rest_route('traces', '/revert/', [
             'methods' => 'post',
-            'args' => array(),
+            'args' => [],
             'callback' => function(WP_REST_Request $request) {
                 return revert_frontend_fields($request);
-            }
+            },
         ]);
         register_rest_route('traces', '/cancel/', [
             'methods' => 'post',
-            'args' => array(),
+            'args' => [],
             'callback' => function(WP_REST_Request $request) {
                 return cancel_frontend_fields($request);
-            }
+            },
+        ]);
+        register_rest_route('traces', '/filters/', [
+            'methods' => 'post',
+            'args' => [],
+            'callback' => function(WP_REST_Request $request) {
+                return get_filtered_traces($request);
+            },
         ]);
     });
 
@@ -44,7 +51,7 @@
 
         return [
             'status' => 'success',
-            'html' => Timber::compile('partials/aside-form-item.twig', $context)
+            'html' => Timber::compile('partials/aside-form-item.twig', $context),
         ];
     }
 
@@ -66,7 +73,7 @@
 
         return [
             'status' => 'success',
-            'html' => Timber::compile('partials/aside-item.twig', $context)
+            'html' => Timber::compile('partials/aside-item.twig', $context),
         ];
     }
 
@@ -80,7 +87,7 @@
 
         return [
             'status' => 'success',
-            'html' => Timber::compile('partials/aside-form-item.twig', $context)
+            'html' => Timber::compile('partials/aside-form-item.twig', $context),
         ];
     }
 
@@ -94,6 +101,46 @@
 
         return [
             'status' => 'success',
-            'html' => Timber::compile('partials/aside-item.twig', $context)
+            'html' => Timber::compile('partials/aside-item.twig', $context),
+        ];
+    }
+
+    function get_filtered_traces(WP_REST_Request $request): array {
+        $formData = $request->get_params();
+
+        $args = [];
+
+        $context = Timber::get_context();
+
+        array_map(function($value, $key) use (&$args) {
+
+
+
+            if (taxonomy_exists($key) && array_filter($value)) {
+
+                if (!isset($args['tax_query'])) {
+                    $args['tax_query'] = [
+                        'relation' => 'OR',
+                    ];
+                }
+
+                $args['tax_query'][] = [
+                    'taxonomy' => $key,
+                    'field' => 'slug',
+                    'terms' => $value,
+                ];
+
+                return $args;
+
+            } else {
+                $args[$key] = $value;
+            }
+        }, $formData, array_keys($formData));
+
+        $context['items'] = pwc_get_posts('trace', $args);
+
+        return [
+            'status' => 'success',
+            'html' => Timber::compile('partials/traces.twig', $context),
         ];
     }

@@ -14,15 +14,15 @@ jQuery(document).ready(function ($) {
     var traces = {};
 
     $.each(latlngs, function(){
-        traces[this.id] = L.polyline(this.coordinates, {color: this.color, trace_id:this.id}).addTo(mymap).on('click', function(e){
+        traces[this.id] = L.polyline(this.coordinates, {color: this.color, trace_id:this.id}).addTo(mymap).on('click', function(){
 			$('[data-id="'+e.sourceTarget.options.trace_id+'"]').toggleClass('is-active');
-        e.stopPropagation();
+        return false;
 		});
     });
 
-    mymap.on('click', function(e) {
+    mymap.on('click', function() {
         $('aside .information').removeClass('is-active');
-        e.stopPropagation();
+        return false;
     });
 
     $(document).on('click', 'aside .information', function(){
